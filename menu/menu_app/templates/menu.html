@@ -1,0 +1,39 @@
+{% for item in menu_list %}
+   {% if active_menu %}
+      {% if item.slug not in active_slugs %}
+            <li>
+              <a href="{{item.get_absolute_url}}">{{ item.name }}</a>
+              {% if item.get_children_count %}
+                <span class="caret"></span>
+                <ul class="menu">
+                  {% include 'menu.html' with menu_list=item.get_children active_menu=True active_slugs=active_slugs menuitem_slug=menuitem_slug %}
+                </ul>
+              {% endif %}
+            </li>
+      {% else %}
+            <li class="opened">
+              {% if item.slug == menuitem_slug %}
+                <a href="{{item.get_absolute_url}}" style="color: red">{{ item.name }}</a>
+              {% else %}
+                <a href="{{item.get_absolute_url}}">{{ item.name }}</a>
+              {% endif %}
+              {% if item.get_children_count %}
+              <span class="caret caret-down"></span>
+                <ul class="menu">
+                  {% include 'menu.html' with menu_list=item.get_children active_menu=True active_slugs=active_slugs menuitem_slug=menuitem_slug %}
+                </ul>
+              {% endif %}
+            </li>
+      {% endif %}
+   {% else %}
+      <li>
+        <a href="{{item.get_absolute_url}}">{{ item.name }}</a>
+        {% if item.get_children_count %}
+        <span class="caret"></span>
+          <ul class="menu">
+            {% include 'menu.html' with menu_list=item.get_children active_menu=False %}
+          </ul>
+        {% endif %}
+      </li>
+   {% endif %}
+{% endfor %}

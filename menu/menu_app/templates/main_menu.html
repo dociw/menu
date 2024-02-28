@@ -1,0 +1,12 @@
+<div class="menu-container">
+    {% for name, value in menu.items %}
+    <ul class="menu main-menu">
+        {% if active_menu %}
+            {% include 'menu.html' with menu_list=value active_menu=True active_slugs=active_slugs menuitem_slug=menuitem_slug %}
+        {% else %}
+            {% include 'menu.html' with menu_list=value active_menu=False %}
+        {% endif %}
+    </ul>
+    {% endfor %}
+</div>
+

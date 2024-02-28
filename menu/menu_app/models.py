@@ -1,5 +1,6 @@
 from django.db import models
 from treebeard.mp_tree import MP_Node
+from django.urls import reverse
 
 
 class Menu(models.Model):
@@ -20,6 +21,10 @@ class MenuItem(MP_Node):
 
     def menu_name(self):
         return self.menu.name
+
+    def get_absolute_url(self):
+        return reverse('menu-view', kwargs={'menu_slug': self.menu.slug,
+                                            'menuitem_slug': self.slug})
 
     def __str__(self):
         return self.name
